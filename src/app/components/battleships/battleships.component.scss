@@ -1,0 +1,83 @@
+.board {
+      display: block;
+      width: 550px;
+      height: calc(100vh - 419px);
+      box-shadow: 0 0 8px 5px rgb(0 0 0 / 20%);
+  .row {
+    width: 550px;
+
+    &:nth-child(odd) .cell.cheader:nth-child(odd) {
+      background-color: #666;
+    }
+
+    &:nth-child(odd) .cell.cheader:nth-child(even) {
+      background-color: #555;
+    }
+
+    &:nth-child(even) .cell.cheader:nth-child(odd) {
+      background-color: #555;
+    }
+
+    &:nth-child(even) .cell.cheader:nth-child(even) {
+      background-color: #666;
+    }
+
+    &:nth-child(odd) .cell:nth-child(odd):not(.cheader) {
+      background-color: #efefef;
+    }
+
+    &:nth-child(odd) .cell:nth-child(even):not(.cheader) {
+      background-color: #cdcdcd;
+    }
+
+    &:nth-child(even) .cell:nth-child(odd):not(.cheader) {
+      background-color: #cdcdcd;
+    }
+
+    &:nth-child(even) .cell:nth-child(even):not(.cheader) {
+      background-color: #efefef;
+    }
+  }
+
+  .cell {
+    width: 50px;
+    height: 50px;
+    float: left;
+    text-align: center;
+    line-height: 50px;
+
+    &.cheader {
+      font-weight: bold;
+      color: white;
+    }
+    &.hit {
+      background-color: green !important;
+      color: white;
+    }
+
+    &.miss {
+      background-color: red !important;
+      color: white;
+    }
+
+    &.active {
+      background-color: cyan !important;
+    }
+  }
+}
+
+.actions {
+  margin-bottom: 1rem;
+    .center {
+      text-align: center;
+    }
+
+    .flex {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+       .clr-form-control {
+         margin: 0;
+       }
+    }
+}

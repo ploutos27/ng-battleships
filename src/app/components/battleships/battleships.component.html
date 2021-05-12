@@ -1,1 +1,20 @@
-battleships components
+<div class="actions">
+  <p class="center">Enter coordinates (as "A1") in input field.</p>
+  <form clrForm class="flex">
+    <clr-control-container>
+      <label>Target:</label>
+      <input clrControl placeholder="Coordinates (e.g: 'A1')" required maxlength="3" />
+      <clr-control-error>You must provide target using coordinates.</clr-control-error>
+    </clr-control-container>
+    <button class="btn btn-primary btn-sm" type=" submit">Fire</button>
+  </form>
+</div>
+
+<div class="board">
+  <div class="row" *ngFor="let row of rows;">
+    <div *ngFor="let columns of row;" [ngClass]="{ cell:true, cheader: columns.header, active:cell?.active, hit:cell?.hit, miss:cell?.miss }">
+        {{ columns?.display }}
+    </div> 
+  </div>
+
+</div>
