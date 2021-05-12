@@ -1,21 +1,22 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ClarityModule } from '@clr/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { AppComponent } from './app.component';
+import { BattleshipsComponent } from './components';
+
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent, BattleshipsComponent],
   imports: [
-    CommonModule,
     BrowserModule,
+    BrowserAnimationsModule,
+    ClarityModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
