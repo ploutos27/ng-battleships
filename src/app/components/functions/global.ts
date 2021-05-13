@@ -1,3 +1,4 @@
+import { isEmpty } from "lodash";
 
 // Validation for coordinates
 export const coordinatesValidList = (coordinates) => {
@@ -5,22 +6,18 @@ export const coordinatesValidList = (coordinates) => {
   return format.test(coordinates);
 };
 
-// Generate random number between 1 - 10
-export const randomNumber = () => {
-  return Math.floor(Math.random() * 10) + 1;
-};
+// Return the matrix for coordinates (index for row & index for column)
+export const getMatrixIndex = async (table, coordinates) => {
+  let [col, row] = coordinates.match(/\D+|\d+/g), // regular expression to seperate numbers from text
+  indexColum, indexRow // index for each row and column
 
-// Generate Uniq Random Number
-export const uniqueRandomNumber = (array, gen_nums) => {
-  var rand = array[Math.floor(Math.random() * array.length)];
-  if (!in_array(gen_nums, rand)) {
-    gen_nums.push(rand);
-    return rand;
-  }
-  return uniqueRandomNumber(array, gen_nums);
-};
+  //get index row
+  for (let i = 0; i < table.length; i++)
+    table[i].forEach((j) => j.header && j.display === (col.toUpperCase()) ? (indexRow = i) : null); // change to uppercase if lowercase
 
-const in_array = (array, el) => {
-  for (var i = 0; i < array.length; i++) if (array[i] == el) return true;
-  return false;
-}
+  // // get index col
+  for (let i = 0; i < table.length; i++) // parse the row if string from regular expression
+    table[i].forEach((j) => j.header && i === parseInt(row) ? (indexColum = i) : null);
+
+  return { indexColum, indexRow };
+};
