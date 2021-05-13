@@ -2,7 +2,7 @@ import { sample, random } from 'lodash';
 
 // Ship as 1 for Ships 
 // Ship as -1 for Destroyers
-
+// Normal ships are initial first board is already empty.
 export const initialShips = async (table) => {
   const randomShip = { indexColum: random(1, 10), indexRow: random(1, 10) }; // https://lodash.com/docs/4.17.15#random
   const moveAxis = sample(['X', 'Y']); // https://lodash.com/docs/#sample

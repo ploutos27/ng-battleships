@@ -26,7 +26,6 @@ const ValidateCoordinates = (
   templateUrl: './battleships.component.html',
   styleUrls: ['./battleships.component.scss'],
 })
-
 export class BattleshipsComponent implements OnInit {
   board = [];
   ships = 5;
@@ -52,14 +51,14 @@ export class BattleshipsComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.board = await drawMatrixBoard();
+    this.board = await drawMatrixBoard(); // draw board
 
-    console.log(this.board)
+    console.log(this.board);
   }
 
   async onFire() {
     if (this.form.invalid) return;
-    const index = await getMatrixIndex(this.board, this.f.cordinators.value); // get index from coord
+    const index = await getMatrixIndex(this.board, this.f.cordinators.value); // get index from user coordinates
     const fire = await this.fireOnCordinators(index);
     this.form.reset();
   }
@@ -70,39 +69,54 @@ export class BattleshipsComponent implements OnInit {
 
   async fireOnCordinators(index) {
     if (isEmpty(this.board[index.indexRow][index.indexColum])) {
-      this.board[index.indexRow][index.indexColum] = { miss: true,display: 'Miss',};
+      this.board[index.indexRow][index.indexColum] = {
+        miss: true,
+        display: 'Miss',
+      };
     } else {
-      if (this.board[index.indexRow][index.indexColum].miss || this.board[index.indexRow][index.indexColum].hit ) {
+      if (
+        this.board[index.indexRow][index.indexColum].miss ||
+        this.board[index.indexRow][index.indexColum].hit
+      ) {
         return false;
       } else {
         const { ship } = this.board[index.indexRow][index.indexColum]; // export ship type
-        this.board[index.indexRow][index.indexColum] = { ship, firedAt: true, hit: true, display: 'Hit' };
-        
+        this.board[index.indexRow][index.indexColum] = {
+          ship,
+          firedAt: true,
+          hit: true,
+          display: 'Hit',
+        };
+
         if (ship !== -1) {
           this.ships -= 1;
         } else {
           this.destroyers -= 1;
         }
-        
-        if (this.ships === 0) {
-          for (let i = 0; i < this.board[index.indexRow].length; i++) {
-            if (
-              !isEmpty(this.board[index.indexRow][i]) &&
-              this.board[index.indexRow][i].ship === 1 &&
-              this.board[index.indexRow][i].hit
-            ) {
-              this.board[index.indexRow][i] = { sunk: true, display: 'Sunk' };
-            }
-          }
-        }
 
+        if (this.ships === 0) this.initClasses(1);
 
+        if (this.destroyers === 0 || this.destroyers === 4)
+          this.initClasses(-1);
 
         if (this.ships === 0 && this.destroyers === 0) {
           this.gameEnd = true;
           this.form.disable();
         }
+      }
+    }
+  }
 
+  async initClasses(type: number) {
+    for (let i = 1; i < this.board.length; i++) {
+      for (let j = 1; j < this.board[i].length; j++) {
+        if (!isEmpty(this.board[i][j])) {
+          if (this.board[i][j].ship === type) {
+            if (this.board[i][j].hit) {
+              this.board[i][j] = { sunk: true, display: 'Sunk' };
+            }
+          }
+        }
       }
     }
   }
