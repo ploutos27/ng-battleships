@@ -83,7 +83,6 @@ export class BattleshipsComponent implements OnInit {
         const { ship } = this.board[index.indexRow][index.indexColum]; // export ship type
         this.board[index.indexRow][index.indexColum] = {
           ship,
-          firedAt: true,
           hit: true,
           display: 'Hit',
         };
